@@ -1,0 +1,20 @@
+.btn {
+    padding: 4px 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.active {
+    background-color: red;
+}
+
+.btnGreen {
+    background-color: green;
+}
+.btnOrange {
+    background-color: Orange;
+}
+
+.primary {
+    background-color: rgb(123, 87, 18);
+}
