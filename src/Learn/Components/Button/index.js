@@ -1,4 +1,4 @@
-import myAlert from "~/myAlert(test)"; // ~/ <=> src
+import myAlert from "~/Learn/myAlert(test)"; // ~/ <=> src
 function Button() {
     return <button onClick={myAlert}>Click me~</button>;
 }
