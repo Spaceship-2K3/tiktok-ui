@@ -1,5 +1,5 @@
 @import "normalize.css";
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+
 :root {
     --primary-color: #fe2c55;
 
@@ -24,11 +24,28 @@ html {
 }
 
 body {
-    font-family: "Roboto", sans-serif;
+    font-family: "TikTokFont", sans-serif;
     font-size: 1.6rem;
     list-style: 1.5;
     text-rendering: optimizeSpeed;
     color: --text-color;
+}
+
+// Fonts embedded
+@font-face {
+    font-family: "TikTokFont";
+    src: url("/assets/fonts/TikTokFont-Regular.woff2");
+    font-weight: 400;
+}
+@font-face {
+    font-family: "TikTokFont";
+    src: url("/assets/fonts/TikTokFont-Semibold.woff2");
+    font-weight: 500;
+}
+@font-face {
+    font-family: "TikTokFont";
+    src: url("/assets/fonts/TikTokFont-Bold.woff2");
+    font-weight: 700;
 }
 
 button,
@@ -36,6 +53,7 @@ input,
 [tabindex] {
     outline: none;
     border: none;
+    font-family: "TikTokFont";
 }
 
 a[href] {

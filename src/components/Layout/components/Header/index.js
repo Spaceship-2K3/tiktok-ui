@@ -26,6 +26,8 @@ import { Wrapper as PopperWrapper } from "~/components/Popper";
 import AccountItem from "~/components/AccountItem";
 import Button from "~/components/Button";
 import Menu from "~/components/Popper/Menu";
+import { MessageIcon, InboxIcon } from "~/components/Icons";
+import Image from "~/components/Image";
 
 const cx = classNames.bind(styles);
 
@@ -116,7 +118,7 @@ function Header() {
         <header className={cx("wrapper")}>
             <div className={cx("inner")}>
                 <div className={cx("logo")}>
-                    <img src={images.logo.default} alt="Tiktok" />
+                    <img src={images.logo} alt="Tiktok" />
                 </div>
 
                 <HeadlessTippy
@@ -172,6 +174,29 @@ function Header() {
                                     <FontAwesomeIcon icon={faCloudArrowUp} />
                                 </button>
                             </Tippy>
+                            <Tippy
+                                content="Message"
+                                delay={[0, 200]}
+                                placement="bottom"
+                            >
+                                <button className={cx("action-btn")}>
+                                    <MessageIcon
+                                        width={"2.6rem"}
+                                        height={"2.6rem"}
+                                    />
+                                </button>
+                            </Tippy>
+                            <Tippy
+                                content="Inbox"
+                                delay={[0, 200]}
+                                placement="bottom"
+                            >
+                                <button
+                                    className={cx("action-btn", "inbox-btn")}
+                                >
+                                    <InboxIcon />
+                                </button>
+                            </Tippy>
                         </>
                     ) : (
                         <>
@@ -185,10 +210,11 @@ function Header() {
                         onChange={handleMenuChange}
                     >
                         {currentUser ? (
-                            <img
+                            <Image
                                 src="https://khoinguonsangtao.vn/wp-content/uploads/2022/08/hinh-nen-phi-hanh-gia-1-305x560.jpg"
                                 className={cx("user-avatar")}
                                 alt="Dao Van Sang"
+                                fallback="https://ttcompany.com.vn/wp-content/uploads/2022/09/hinh-nen-phi-hanh-gia-cute-cho-dien-thoai-13.jpg"
                             />
                         ) : (
                             <button className={cx("more-btn")}>
