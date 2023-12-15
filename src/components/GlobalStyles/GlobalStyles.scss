@@ -57,7 +57,7 @@ input,
 }
 
 a[href] {
-    color: --text-color;
+    color: var(--text-color);
     text-decoration: none;
 }
 

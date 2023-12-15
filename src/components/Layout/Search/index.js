@@ -15,7 +15,32 @@ function Search() {
     const [searchValue, setSearchValue] = useState("");
     const [searchResult, setSearchResult] = useState([]);
     const [showResult, setShowResult] = useState(true);
+    const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+        // Kinh nghiem go loi la khi viet dong nao ma gay ra loi thi phai nghi ngo ngay dong do
+        if (!searchValue.trim()) {
+            setSearchResult([]);
+            return;
+        }
+
+        setLoading(true);
+
+        // todo : encode sang 1 ma khac de khong vi pham code cua URL, query parameter
+        fetch(
+            `https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(
+                searchValue
+            )}&type=less`
+        )
+            .then((res) => res.json())
+            .then((res) => {
+                setSearchResult(res.data);
+                setLoading(false);
+            })
+            .catch(() => {
+                setLoading(false);
+            });
+    }, [searchValue]);
     const inputRef = useRef();
 
     const handleClear = () => {
@@ -28,11 +53,6 @@ function Search() {
         setShowResult(false);
     };
 
-    useEffect(() => {
-        setTimeout(() => {
-            setSearchResult([1, 1, 1, 1]);
-        }, 0);
-    }, []);
     return (
         <HeadlessTippy
             interactive
@@ -41,10 +61,9 @@ function Search() {
                 <div className={cx("search-result")} tabIndex="-1" {...attrs}>
                     <PopperWrapper>
                         <h4 className={cx("search-title")}>Accounts</h4>
-                        <AccountItem />
-                        <AccountItem />
-                        <AccountItem />
-                        <AccountItem />
+                        {searchResult.map((result) => (
+                            <AccountItem key={result.id} data={result} />
+                        ))}
                     </PopperWrapper>
                 </div>
             )}
@@ -59,18 +78,24 @@ function Search() {
                     onFocus={() => setShowResult(true)}
                 />
 
-                {!!searchValue && (
+                {/* Clear */}
+                {!!searchValue && !loading && (
                     <button
                         ref={inputRef}
                         className={cx("clear")}
                         onClick={handleClear}
                     >
-                        {/* Clear */}
                         <FontAwesomeIcon icon={faCircleXmark} />
                     </button>
                 )}
+
                 {/* Loading */}
-                {/* <FontAwesomeIcon className={cx("loading")} icon={faSpinner} /> */}
+                {loading && (
+                    <FontAwesomeIcon
+                        className={cx("loading")}
+                        icon={faSpinner}
+                    />
+                )}
 
                 <button className={cx("search-btn")}>
                     {/* Search */}
