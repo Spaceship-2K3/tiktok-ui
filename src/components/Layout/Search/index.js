@@ -9,7 +9,8 @@ import { faCircleXmark, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { Wrapper as PopperWrapper } from "~/components/Popper";
 import AccountItem from "~/components/AccountItem";
 import { SearchIcon } from "~/components/Icons";
-import userEvent from "@testing-library/user-event";
+import { useDebounce } from "~/hooks";
+
 const cx = classNames.bind(styles);
 function Search() {
     const [searchValue, setSearchValue] = useState("");
@@ -17,9 +18,13 @@ function Search() {
     const [showResult, setShowResult] = useState(true);
     const [loading, setLoading] = useState(false);
 
+    // 1: ''
+    // 2 : 'h
+    const debounced = useDebounce(searchValue, 500);
+
     useEffect(() => {
         // Kinh nghiem go loi la khi viet dong nao ma gay ra loi thi phai nghi ngo ngay dong do
-        if (!searchValue.trim()) {
+        if (!debounced.trim()) {
             setSearchResult([]);
             return;
         }
@@ -29,7 +34,7 @@ function Search() {
         // todo : encode sang 1 ma khac de khong vi pham code cua URL, query parameter
         fetch(
             `https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(
-                searchValue
+                debounced
             )}&type=less`
         )
             .then((res) => res.json())
@@ -40,7 +45,8 @@ function Search() {
             .catch(() => {
                 setLoading(false);
             });
-    }, [searchValue]);
+    }, [debounced]);
+
     const inputRef = useRef();
 
     const handleClear = () => {
