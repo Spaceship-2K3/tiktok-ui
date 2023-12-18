@@ -5,12 +5,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HeadlessTippy from "@tippyjs/react/headless";
 import "tippy.js/dist/tippy.css";
 import { faCircleXmark, faSpinner } from "@fortawesome/free-solid-svg-icons";
-
+import axios from "axios";
 import { Wrapper as PopperWrapper } from "~/components/Popper";
 import AccountItem from "~/components/AccountItem";
 import { SearchIcon } from "~/components/Icons";
 import { useDebounce } from "~/hooks";
-
+import * as searchService from "~/apiServices/searchService";
 const cx = classNames.bind(styles);
 function Search() {
     const [searchValue, setSearchValue] = useState("");
@@ -18,6 +18,7 @@ function Search() {
     const [showResult, setShowResult] = useState(true);
     const [loading, setLoading] = useState(false);
 
+    // ! Khi người dùng delay 500ms thì useDebounce mới xét giá trị để tìm kiếm
     // 1: ''
     // 2 : 'h
     const debounced = useDebounce(searchValue, 500);
@@ -29,22 +30,13 @@ function Search() {
             return;
         }
 
-        setLoading(true);
-
-        // todo : encode sang 1 ma khac de khong vi pham code cua URL, query parameter
-        fetch(
-            `https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(
-                debounced
-            )}&type=less`
-        )
-            .then((res) => res.json())
-            .then((res) => {
-                setSearchResult(res.data);
-                setLoading(false);
-            })
-            .catch(() => {
-                setLoading(false);
-            });
+        const fetchApi = async () => {
+            setLoading(true);
+            const result = await searchService.search(debounced);
+            setSearchResult(result);
+            setLoading(false);
+        };
+        fetchApi();
     }, [debounced]);
 
     const inputRef = useRef();
