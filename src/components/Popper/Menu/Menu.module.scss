@@ -27,12 +27,16 @@
 .menu-popper {
     padding-bottom: 8px;
 }
+.menu-scrollable {
+    overflow-y: auto;
+}
 
 // Header
 .header {
     position: relative;
     height: 50px;
     margin-top: -8px;
+    flex-shrink: 0;
 }
 
 .back-btn {
