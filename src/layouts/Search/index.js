@@ -10,7 +10,7 @@ import { Wrapper as PopperWrapper } from "~/components/Popper";
 import AccountItem from "~/components/AccountItem";
 import { SearchIcon } from "~/components/Icons";
 import { useDebounce } from "~/hooks";
-import * as searchService from "~/apiServices/searchService";
+import * as searchService from "~/services/searchService";
 const cx = classNames.bind(styles);
 function Search() {
     const [searchValue, setSearchValue] = useState("");
