@@ -2,12 +2,13 @@ import classNames from "classnames/bind";
 import styles from "./Button.module.scss";
 import { Link } from "react-router-dom";
 
+import PropTypes from "prop-types";
 const cx = classNames.bind(styles);
 
 // ! Do nhiều lúc cái nút có thể là 1 thẻ a or 1 định tuyến(router)
 function Button({
-    to,
     href,
+    to,
     children,
     primary,
     onClick,
@@ -62,5 +63,22 @@ function Button({
         </Component>
     );
 }
+
+Button.propTypes = {
+    to: PropTypes.string,
+    href: PropTypes.string,
+    primary: PropTypes.bool,
+    outline: PropTypes.bool,
+    disabled: PropTypes.bool,
+    large: PropTypes.bool,
+    small: PropTypes.bool,
+    text: PropTypes.bool,
+    rounded: PropTypes.bool,
+    children: PropTypes.node.isRequired,
+    onClick: PropTypes.func,
+    className: PropTypes.string,
+    leftIcon: PropTypes.node,
+    rightIcon: PropTypes.node,
+};
 
 export default Button;
