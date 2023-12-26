@@ -1,0 +1,33 @@
+.menu-item {
+    display: flex;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background ease-in-out 200ms;
+    .menu-title {
+        margin-left: 10px;
+    }
+
+    &:hover {
+        background: rgba(22, 24, 35, 0.03);
+    }
+
+    &.active {
+        color: var(--primary-color);
+        .active-icon {
+            display: inline-block;
+        }
+        .menu-icon {
+            display: none;
+        }
+    }
+
+    .active-icon {
+        display: none;
+    }
+    .menu-icon {
+        display: inline-block;
+    }
+}

@@ -6,6 +6,7 @@ import classNames from "classnames/bind";
 import styles from "./Menu.module.scss";
 import Tippy from "@tippyjs/react/headless";
 import Header from "./Header";
+import { render } from "@testing-library/react";
 
 const cx = classNames.bind(styles);
 const defaultFn = () => {};
@@ -39,6 +40,25 @@ function Menu({
             );
         });
     };
+
+    const handleOnback = () => {
+        setHistory((prev) => prev.slice(0, prev.length - 1));
+    };
+
+    const renderResult = (attrs) => {
+        <div className={cx("menu-list")} tabIndex="-1" {...attrs}>
+            <PopperWrapper className={cx("menu-popper")}>
+                {/*   xu li khi mang k phai la phan tu dau tien thi xoa phan tu thu 2 roi back ve */}
+                {history.length > 1 && (
+                    <Header title="Language" onBack={handleOnback} />
+                )}
+                <div className={cx("menu-scrollable")}>{renderItem()}</div>
+            </PopperWrapper>
+        </div>;
+    };
+
+    const handleResetToFirstPage = () => setHistory((prev) => prev.slice(0, 1));
+
     return (
         <Tippy
             interactive
@@ -46,27 +66,8 @@ function Menu({
             offset={[10, 10]}
             hideOnClick={hideOnClick}
             placement="bottom-end"
-            render={(attrs) => (
-                <div className={cx("menu-list")} tabIndex="-1" {...attrs}>
-                    <PopperWrapper className={cx("menu-popper")}>
-                        {/*   xu li khi mang k phai la phan tu dau tien thi xoa phan tu thu 2 roi back ve */}
-                        {history.length > 1 && (
-                            <Header
-                                title="Language"
-                                onBack={() => {
-                                    setHistory((prev) =>
-                                        prev.slice(0, prev.length - 1)
-                                    );
-                                }}
-                            />
-                        )}
-                        <div className={cx("menu-scrollable")}>
-                            {renderItem()}
-                        </div>
-                    </PopperWrapper>
-                </div>
-            )}
-            onHide={() => setHistory((prev) => prev.slice(0, 1))}
+            render={renderResult}
+            onHide={handleResetToFirstPage}
         >
             {children}
         </Tippy>

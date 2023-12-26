@@ -21,23 +21,23 @@ function Search() {
     // ! Khi người dùng delay 500ms thì useDebounce mới xét giá trị để tìm kiếm
     // 1: ''
     // 2 : 'h
-    const debounced = useDebounce(searchValue, 500);
+    const debouncedValue = useDebounce(searchValue, 500);
 
     useEffect(() => {
         // Kinh nghiem go loi la khi viet dong nao ma gay ra loi thi phai nghi ngo ngay dong do
-        if (!debounced.trim()) {
+        if (!debouncedValue.trim()) {
             setSearchResult([]);
             return;
         }
 
         const fetchApi = async () => {
             setLoading(true);
-            const result = await searchService.search(debounced);
+            const result = await searchService.search(debouncedValue);
             setSearchResult(result);
             setLoading(false);
         };
         fetchApi();
-    }, [debounced]);
+    }, [debouncedValue]);
 
     const inputRef = useRef();
 
